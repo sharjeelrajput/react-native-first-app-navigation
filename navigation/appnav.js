@@ -1,54 +1,54 @@
-import React , {useContext} from 'react';
-
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import HomeScreenComponent from '../components/HomeScreen';
+import HomeScreenComponent from "../components/HomeScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Button, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { AuthContext } from "../components/AuthContext";
 import Dashboard from "../components/Dashboard";
 import LoginScreenComponent from "../components/LoginScreen";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+const Drawer = createDrawerNavigator();
+
+import Header from "../components/Header";
 const Stack = createNativeStackNavigator();
-export default function AppNav({navigation}) {
+export default function AppNav({ navigation }) {
   const { isLoggedIn, profile } = useContext(AuthContext);
   return (
     <NavigationContainer>
-        <Stack.Navigator>
+      {/* <Drawer.Navigator initialRouteName="/">
+        <Drawer.Screen name="Home" component={HomeScreenComponent} />
+        <Drawer.Screen name="Dashboard" component={NotificationsScreen} />
+      </Drawer.Navigator> */}
 
-        {isLoggedIn != true ? (
-          <Stack.Screen
-          name="/"
-          component={LoginScreenComponent}
-          options={{ title: "Welcome" }}
-        />
-        // <LoginScreenComponent value={{ navigation }}></LoginScreenComponent>
+      {isLoggedIn != true ? (
+        <Stack.Navigator>
+          <Drawer.Screen
+            name="/"
+            component={LoginScreenComponent}
+            options={{ title: "Login Information" }}
+          />
+        </Stack.Navigator>
       ) : (
-        <Stack.Screen
+        <Drawer.Navigator>
+          {/* // <LoginScreenComponent value={{ navigation }}></LoginScreenComponent> */}
+          <Drawer.Screen
             name="/"
             component={Dashboard}
-            options={{ title: "Dashboard 2 ",
-            headerRight :() => {
-              <view>
-                <TouchableOpacity style={{marginLeft: 15}}>
-                  <MaterialCommunityIcons
-                    name="dots-vertical"
-                    size={28}
-                    color='#000000'>
-
-                    </MaterialCommunityIcons>
-                </TouchableOpacity>
-
-              </view>
-            } }}
+            options={{
+              title: "My Videos",
+            }}
           />
-        )}
-          <Stack.Screen
+          <Drawer.Screen
             name="Home"
             component={HomeScreenComponent}
-            options={{ title: "Video List" }}
+            options={{ title: "Dashboard Home" }}
           />
-          {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
-        </Stack.Navigator>
-      </NavigationContainer>
-  )
+        </Drawer.Navigator>
+      )}
+
+      {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+    </NavigationContainer>
+  );
 }

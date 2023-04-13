@@ -1,16 +1,24 @@
 import React, { Component, useContext } from "react";
-import { StatusBar, Text, View } from "react-native";
+import { Button, StatusBar, Text, View } from "react-native";
 import { AuthContext } from "./AuthContext";
 import Dashboard from "./Dashboard";
 import LoginScreenComponent from "./LoginScreen";
+import CustomHeader from "./CustomHeader";
 
 export default HomeScreenComponent = ({ navigation }) => {
   const { isLoggedIn, profile } = useContext(AuthContext);
 
   return (
     <View>
+       <CustomHeader navigation={navigation} title="Settings" />
       <StatusBar style="auto" />
       <Text>This is List page ...</Text>
+      <Button
+      title="dashBoard"
+      onPress={() =>
+        navigation.navigate('/', {name: 'Jane'})
+      }
+    />
       {/* <Text> Is use login {isLoggedIn == true ? " Login " : "not loggin"}</Text> */}
       {/* {isLoggedIn != true ? (
         <LoginScreenComponent value={{ navigation }}></LoginScreenComponent>

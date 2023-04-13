@@ -3,11 +3,13 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) =>{
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
   const [profile, setProfile] = useState();
 
   const login = async (name, password) => {
     console.log("submit form called...........>>>..");
     console.log("body data ", name, password);
+    setUserEmail(name);
     // const res = await fetch("http://localhost:5000/login", {
     const res = await fetch("https://dev.prontoai.app/app/pronto_signin", {
       method: "post",
@@ -42,7 +44,7 @@ export const AuthProvider = ({children}) =>{
     setIsLoggedIn(false);
   };
   return(
-    <AuthContext.Provider value={{ logout, login, profile, isLoggedIn}}>
+    <AuthContext.Provider value={{ logout, login, profile, isLoggedIn, userEmail}}>
       {children}
     </AuthContext.Provider>
   );
