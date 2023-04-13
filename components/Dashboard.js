@@ -78,6 +78,15 @@ export default function Dashboard({ navigation }) {
     console.log("%c*************** LOAD VIDEO LIST .....", "color:red");
     searchVideoData(["published", "draft"]);
   }, []);
+
+  const loadVideoDetail = ( video ) =>{
+    console.log("Load video detail ...", video.fpath);
+    navigation.navigate('videoDetail', { id: video.fpath, title : video.title, detail_min : {
+      thumb : video.thumbnail_path_signed_url,
+      videoUrl : video?.fpath_signed_url
+    } });
+    // navigation.navigate('videoDetail', {});
+  }
   return (
     <View style={{ height: screenHeight }}>
        <CustomHeader navigation={navigation}  title="Dashboard page " />
@@ -126,7 +135,7 @@ export default function Dashboard({ navigation }) {
                 <Text>{video.title}</Text>
                 {/* <Text>{video.thumbnail_path_signed_url}</Text> */}
                 <View style={{ height: 50, width : 150, background: 'url(' + video.thumbnail_path_signed_url + ') cover'}} key={`img-bg-${index}`}>
-                <Text>HEllo</Text>
+                <Text onPress={()=>{ loadVideoDetail(video)}}>HEllo</Text>
                 </View>
                 <Image
                   key={`img-${index}`}
